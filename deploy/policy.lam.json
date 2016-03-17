@@ -18,7 +18,7 @@
                 "sdb:Select"
             ],
             "Effect": "Allow",
-            "Resource": "arn:aws:sdb:::domain/ecs-service-ports"
+            "Resource": "arn:aws:sdb:*:*:domain/ecs-service-ports"
         }
     ]
 }
