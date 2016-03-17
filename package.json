@@ -1,8 +1,8 @@
 {
   "name": "port-master",
-  "version": "0.0.1",
-  "description": "Sample function.",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Lambda function for assigning microservice ports",
+  "main": "index.py",
   "author": "Signiant",
   "license": "MIT",
   "devDependencies": {

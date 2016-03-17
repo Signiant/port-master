@@ -10,6 +10,15 @@
                 "logs:PutLogEvents"
             ],
             "Effect": "Allow"
+        },
+        {
+            "Sid": "Sdb",
+            "Action": [
+                "sdb:PutAttributes",
+                "sdb:Select"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:sdb:::domain/ecs-service-ports"
         }
     ]
 }
