@@ -1,8 +1,9 @@
 import boto3
 import botocore
 
-simpledb = boto3.client('sdb')
-domain = 'ecs-service-ports'
+dynamodb = boto3.client('dynamodb')
+
+table = 'ECS_SERVICE_PORTS'
 rangeMin = 5001
 rangeMax = 5999
 
@@ -15,42 +16,55 @@ def handler(event, context):
     code  = event['code']
 
     try:
-        portResponse = simpledb.select(
-            SelectExpression= "select port from `%s` where port >= '%d' and port <= '%d' order by port desc limit 1" % (domain, rangeMin, rangeMax)
-        );
-    except botocore.exceptions.ClientError as e:
-        print "Error performing select on domain %s" % domain
+        portResponse = dynamodb.scan(
+            TableName=table,
+            FilterExpression='port BETWEEN :min and :max',
+            ProjectionExpression='port',
+            ExpressionAttributeValues={
+                ':min': {
+                    'N': '%d' % rangeMin
+                },
+                ':max': {
+                    'N': '%d' % rangeMax
+                } 
+            }
+        )
+    except botocore.exceptions.ClientError as e :
+        print "Error performing scan on dynamodb table %s" % table
         print e
-        raise Exception("SimpleDbError - %s" % e);
-
-    if 'Items' in portResponse:
-        nextPort = max(int(port['Value']) for port in portResponse['Items'][0]['Attributes']) + 1
-        if nextPort > rangeMax:
+        raise Exception("DynamoDbError - %s" % e)
+    
+    if portResponse['Count'] != 0:
+        nextPort =  max(int(port['port']['N'])for port in portResponse['Items']) + 1
+        if(nextPort > rangeMax):
             raise Exception("PortRangeError - Unable to allocate port - Next available port (%d) exceeds defined range (%d - %d)" % (nextPort, rangeMin, rangeMax))
     else:
-        print("No existing port allocations found, starting at 5001")
+        print "No existing port allocations found in range, starting from %s" % rangeMin
         nextPort = rangeMin
-
+        
     print "Assigning port %d to service %s with code %s" % (nextPort, service, code)
-
+    
     try:
-        putResponse = simpledb.put_attributes(
-            DomainName=domain,
-            ItemName=service,
-            Attributes=[
-                {
-                    'Name': 'port',
-                    'Value': "%d" % nextPort
+        dynamodb.update_item(
+            TableName=table,
+            Key={
+                'port': {
+                    'N': '%d' % nextPort
+                }
+            },
+            UpdateExpression='SET service = :serviceName, code = :serviceCode',
+            ExpressionAttributeValues={
+                ':serviceName': {
+                    'S': service
                 },
-                {
-                    'Name': 'code',
-                    'Value': code
-                },
-            ],
+                ':serviceCode': {
+                    'S': code
+                }
+            } 
         )
     except botocore.exceptions.ClientError as e:
-        print "Error performing put-attributes on domain %s" % domain
+        print "Error adding service to dynamodb table %s" % table
         print e
-        raise Exception("SimpleDbError - %s" % e)
-
+        raise Exception("DynamoDbError - %s" % e)
+    
     return {'port': nextPort}
