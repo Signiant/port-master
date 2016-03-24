@@ -8,7 +8,6 @@ module.exports = function (grunt) {
             'endeavour': {
                 'options': {
                     'data': {
-                        'archive': 'endeavour.zip',
                         'region': 'us-east-1'
                     }
                 },
@@ -17,7 +16,6 @@ module.exports = function (grunt) {
             'atlantis': {
                 'options': {
                     'data': {
-                        'archive': 'atlantis.zip',
                         'region': 'us-west-2'
                     }
                 },
@@ -26,7 +24,6 @@ module.exports = function (grunt) {
             'discovery': {
                 'options': {
                     'data': {
-                        'archive': 'discovery.zip',
                         'region': 'us-west-1'
                     }
                 },
@@ -35,7 +32,6 @@ module.exports = function (grunt) {
             'columbia': {
                 'options': {
                     'data': {
-                        'archive': 'columbia.zip',
                         'region': 'eu-west-1'
                     }
                 },
@@ -44,7 +40,6 @@ module.exports = function (grunt) {
             'challenger': {
                 'options': {
                     'data': {
-                        'archive': 'challenger.zip',
                         'region': 'eu-west-1'
                     }
                 },
@@ -53,7 +48,6 @@ module.exports = function (grunt) {
             'stage': {
                 'options': {
                     'data': {
-                        'archive': 'stage.zip',
                         'region': 'us-east-1'
                     }
                 },
@@ -62,7 +56,6 @@ module.exports = function (grunt) {
             'prod': {
                 'options': {
                     'data': {
-                        'archive': 'prod.zip',
                         'region': 'us-east-1'
                     }
                 },
@@ -71,7 +64,6 @@ module.exports = function (grunt) {
             'prod-west': {
                 'options': {
                     'data': {
-                        'archive': 'prod-west.zip',
                         'region': 'us-west-2'
                     }
                 },
@@ -97,122 +89,12 @@ module.exports = function (grunt) {
             }
         },
         compress: {
-            'endeavour': {
-                'options': { 'archive': 'dist/endeavour.zip' },
+            'main': {
+                'options': { 'archive': 'dist/lambda.zip' },
                 'files': [
                     {
                         'src': 'index.py',
                         'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/endeavour/',
-                        'expand': true
-                    }
-                ]
-            },
-            'atlantis': {
-                'options': { 'archive': 'dist/atlantis.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/atlantis/',
-                        'expand': true
-                    }
-                ]
-            },
-            'discovery': {
-                'options': { 'archive': 'dist/discovery.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/discovery/',
-                        'expand': true
-                    }
-                ]
-            },
-            'columbia': {
-                'options': { 'archive': 'dist/columbia.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/columbia/',
-                        'expand': true
-                    }
-                ]
-            },
-            'challenger': {
-                'options': { 'archive': 'dist/challenger.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/challenger/',
-                        'expand': true
-                    }
-                ]
-            },
-            'stage': {
-                'options': { 'archive': 'dist/stage.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/stage/',
-                        'expand': true
-                    }
-                ]
-            },
-            'prod': {
-                'options': { 'archive': 'dist/prod.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/prod/',
-                        'expand': true
-                    }
-                ]
-            },
-            'prod-west': {
-                'options': { 'archive': 'dist/prod-west.zip' },
-                'files': [
-                    {
-                        'src': 'index.py',
-                        'cwd': 'src/',
-                        'expand': true
-                    },
-                    {
-                        'src': 'config.json',
-                        'cwd': 'src/config/prod-west/',
                         'expand': true
                     }
                 ]

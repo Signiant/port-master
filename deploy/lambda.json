@@ -1,6 +1,6 @@
 {
   "name": "port-master",
-  "archive": "<%= archive %>",
+  "archive": "lambda.zip",
   "description": "Lambda function for assigning microservice ports",
   "region": "<%= region %>",
   "runtime": "python2.7",

@@ -12,13 +12,13 @@
             "Effect": "Allow"
         },
         {
-            "Sid": "Sdb",
+            "Sid": "dynamodb",
             "Action": [
-                "sdb:PutAttributes",
-                "sdb:Select"
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem"
             ],
             "Effect": "Allow",
-            "Resource": "arn:aws:sdb:*:*:domain/ecs-service-ports"
+            "Resource": "arn:aws:dynamodb:*:*:table/ECS_SERVICE_PORTS"
         }
     ]
 }
