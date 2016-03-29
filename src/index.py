@@ -1,19 +1,22 @@
 import boto3
 import botocore
+import json
 
 dynamodb = boto3.client('dynamodb')
 
-table = 'ECS_SERVICE_PORTS'
-rangeMin = 5001
-rangeMax = 5999
+with open('config.json') as configFile:
+    config = json.load(configFile);
+table = config['table'];
+rangeMin = config['rangeMin']
+rangeMax = config['rangeMax']
 
 def handler(event, context):
-    if 'service' not in event or 'code' not in event:
+    if 'service' not in event or not event['service'] or 'code' not in event or not event['code']:
         print("Error, invalid parameters provided in request")
         raise Exception("ParameterError - Invalid parameters provided in POST request")
 
     service = event['service']
-    code  = event['code']
+    code = event['code']
 
     try:
         portResponse = dynamodb.scan(

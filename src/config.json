@@ -1,0 +1,5 @@
+{
+    "table": "ECS_SERVICE_PORTS",
+    "rangeMin": 5001,
+    "rangeMax": 5999
+}

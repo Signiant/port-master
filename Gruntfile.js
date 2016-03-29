@@ -96,6 +96,11 @@ module.exports = function (grunt) {
                         'src': 'index.py',
                         'cwd': 'src/',
                         'expand': true
+                    },
+                    {
+                        'src': 'config.json',
+                        'cwd': 'src/',
+                        'expand': true
                     }
                 ]
             }
